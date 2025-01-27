@@ -3,6 +3,6 @@
 </script>
 
 <template>
-  <HelloWorld />
+
 </template>
 
