@@ -7,9 +7,6 @@
     <div style="width: 50%; height: 50vh;">
       <events />
     </div>
-    <div style="width: 50%; height: 50vh;">
-      <notes />
-    </div>
   </div>
 </template>
 
@@ -22,6 +19,7 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  
 
 }
 </style>
