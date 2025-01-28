@@ -36,17 +36,13 @@
 </template>
 
 <script>
+import { eventsData } from '../data/testdata.js';
+
 export default {
     name: 'Events',
     data() {
         return {
-            events: [ // test data
-                { id: 1, title: 'Customer meeting', description: 'Event details', timestamp: "2025-01-30T12:00:00Z" },
-                { id: 2, title: 'Team building', description: 'Event details', timestamp: "2025-02-03T15:30:00Z" },
-                { id: 3, title: 'Board meeting', description: 'Event details', timestamp: "2025-02-07T09:45:00Z" },
-                { id: 4, title: 'Client presentation', description: 'Event details', timestamp: "2025-02-14T08:20:00Z" },
-                { id: 5, title: 'Company dinner', description: 'Event details', timestamp: "2025-02-18T18:00:00Z" }
-            ],
+            events: eventsData,
             dialog: false,
             selectedEvent: {},
         };
