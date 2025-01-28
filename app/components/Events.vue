@@ -1,0 +1,110 @@
+<template>
+    <div>
+        <v-card class="events-card">
+            <div class="card-header">
+                <h1>Upcoming Events</h1>
+            </div>
+
+            <v-list lines="one" class="events-list">
+                <v-list-item
+                    v-for="event in sortedEvents"
+                    :key="event.id"
+                    variant="simple"
+                    class="event-item"
+                    @click="showEventDetails(event)"
+                >
+                    <v-list-item-content>
+                        <v-list-item-title>{{ event.title }}</v-list-item-title>
+                        <v-list-item-subtitle>{{ new Date(event.timestamp).toLocaleString() }}</v-list-item-subtitle>
+                    </v-list-item-content>
+                </v-list-item>
+            </v-list>
+        </v-card>
+        <v-dialog v-model="dialog" max-width="500">
+            <v-card>
+                <v-card-title>Event Details</v-card-title>
+                <v-card-text>
+                    <p><strong>Description:</strong> {{ selectedEvent.description }}</p>
+                    <p><strong>Timestamp:</strong> {{ new Date(selectedEvent.timestamp).toLocaleString() }}</p>
+                </v-card-text>
+                <v-card-actions>
+                    <v-btn color="primary" @click="dialog = false">Close</v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
+    </div>
+</template>
+
+<script>
+export default {
+    name: 'Events',
+    data() {
+        return {
+            events: [ // test data
+                { id: 1, title: 'Customer meeting', description: 'Event details', timestamp: "2025-01-30T12:00:00Z" },
+                { id: 2, title: 'Team building', description: 'Event details', timestamp: "2025-02-03T15:30:00Z" },
+                { id: 3, title: 'Board meeting', description: 'Event details', timestamp: "2025-02-07T09:45:00Z" },
+                { id: 4, title: 'Client presentation', description: 'Event details', timestamp: "2025-02-14T08:20:00Z" },
+                { id: 5, title: 'Company dinner', description: 'Event details', timestamp: "2025-02-18T18:00:00Z" }
+            ],
+            dialog: false,
+            selectedEvent: {},
+        };
+    },
+    computed: {
+        sortedEvents() {
+            return this.events.slice().sort((a, b) => {
+                if (this.sortCriterion === 'Date desc') {
+                    return new Date(b.timestamp) - new Date(a.timestamp);
+                } else if (this.sortCriterion === 'Date asc') {
+                    return new Date(a.timestamp) - new Date(b.timestamp);
+                }
+                return 0;
+            });
+        }
+    },
+    methods: {
+        showEventDetails(event) {
+            this.selectedEvent = event;
+            this.dialog = true;
+        }
+    }
+};
+</script>
+
+<style scoped>
+.events-card {
+    height: 50vh;
+}
+
+.events-list {
+    height: 44.1vh;
+    overflow-y: auto;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+    height: 6.6vh;
+}
+
+.sort-select {
+    margin-top: 2%;
+    padding: 3px;
+    width: 60px;
+}
+
+.event-item {
+    width: 99%;
+    border-radius: 10px;
+    margin-bottom: 8px;
+    margin-left: 0.5%;
+    background-color: rgb(47, 47, 47);
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    align-items: center;
+}
+</style>

@@ -1,10 +1,12 @@
 <template>
-  <div>
+  <div class="body">
     <div style="width: 50%; height: 50vh;">
       <support-tickets />
       <p></p>
     </div>
-
+    <div style="width: 50%; height: 50vh;">
+      <events />
+    </div>
   </div>
 </template>
 
@@ -12,4 +14,12 @@
 
 </script>
 
-<style></style>
+<style>
+.body {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  
+
+}
+</style>
