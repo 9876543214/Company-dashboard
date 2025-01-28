@@ -88,9 +88,9 @@ export default {
     computed: {
         sortedTickets() { // sorterer billettene
             return this.tickets.slice().sort((a, b) => {
-                if (this.sortCriterion === 'Date asc') {
+                if (this.sortCriterion === 'Date desc') {
                     return new Date(b.timestamp) - new Date(a.timestamp);
-                } else if (this.sortCriterion === 'Date desc') {
+                } else if (this.sortCriterion === 'Date asc') {
                     return new Date(a.timestamp) - new Date(b.timestamp)
                 } else if (this.sortCriterion === 'Priority asc') {
                     const priorityOrder = { low: 1, medium: 2, high: 3 };
