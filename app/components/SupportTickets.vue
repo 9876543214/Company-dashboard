@@ -1,40 +1,32 @@
 <template>
-    <div>
-        <v-card class="support-tickets-card">
-            <div class="card-header">
-                <h1>Support tickets</h1> <!-- select hvor du kan sortere billetter-->
-                <v-select
-                    v-model="sortCriterion"
-                    :items="sortOptions"
-                    item-text="text"
-                    item-value="value"
-                    label="Sort by"
-                    density="comfortable"
-                    class="sort-select"
-                ></v-select>
-            </div>
+    <v-card>
 
-            <v-list lines="one" class="support-tickets"> <!-- Ticket -->
-                <v-list-item
-                    v-for="ticket in sortedTickets"
-                    :key="ticket.id"
-                    variant="simple"
-                    class="support-ticket"
-                    @click="showTicketDetails(ticket)"
-                >
+        <div class="card-header">
+            <h1>Support tickets</h1>
+            <v-btn color="primary" @click="filterDialog = true">Filter & Sort</v-btn>
+        </div>
+        
+        <v-list lines="one" class="support-tickets">
+            <v-list-item
+            v-for="ticket in filteredAndSortedTickets"
+            :key="ticket.id"
+            variant="simple"
+            class="support-ticket"
+            @click="showTicketDetails(ticket)"
+            >
                 <div :class="getTimeClass(ticket.timestamp)" class="wait-time"></div>
-                    <v-list-item-content>
-                        <v-list-item-title>{{ ticket.title }}</v-list-item-title>
-                    </v-list-item-content>
-                    <v-list-item-action>
-                        <v-chip :color="getPriorityColor(ticket.priority)" class="priority-level">{{ ticket.priority }}</v-chip>
-                    </v-list-item-action>
-                </v-list-item>
-            </v-list>
-        </v-card>
+                <v-list-item-content>
+                    <v-list-item-title>{{ ticket.title }}</v-list-item-title>
+                </v-list-item-content>
+                <v-list-item-action>
+                    <v-chip :color="getPriorityColor(ticket.priority)" class="priority-level">{{ ticket.priority }}</v-chip>
+                </v-list-item-action>
+            </v-list-item>
+        </v-list>
+        
         <v-dialog v-model="dialog" max-width="500">
             <v-card>
-                <v-card-title>Ticket Details</v-card-title>  <!-- popup når du trykker på en ticket -->
+                <v-card-title>Ticket Details</v-card-title>
                 <v-card-text>
                     <p><strong>Customer:</strong> {{ selectedTicket.customer }}</p>
                     <p><strong>Priority:</strong> {{ selectedTicket.priority }}</p>
@@ -46,8 +38,44 @@
                 </v-card-actions>
             </v-card>
         </v-dialog>
-    </div>
-    </template>
+        
+        <v-dialog v-model="filterDialog" max-width="600">
+            <v-card>
+                <v-card-title>Filter & Sort Tickets</v-card-title>
+                <v-card-text>
+                    <v-form>
+                        <v-select
+                        clearable    
+                        multiple 
+                        chips
+                        :items="customerOptions"
+                        v-model="filterCustomer" 
+                        label="Customer"
+                        >
+                        </v-select>
+                        <v-btn text @click="selectAllCustomers" class="select_all">Select All</v-btn>
+                        <v-select
+                        clearable
+                        chips
+                        multiple
+                        :items="priorityOptions"
+                        v-model="filterPriority"
+                        label="Priority"
+                        ></v-select>
+                        <v-select
+                        v-model="sortCriterion"
+                        :items="sortOptions"
+                        label="Sort by"
+                        ></v-select>
+                    </v-form>
+                </v-card-text>
+                <v-card-actions>
+                    <v-btn color="primary" text @click="filterDialog = false">Finish</v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
+    </v-card>
+</template>
 
 
 <script>
@@ -59,32 +87,55 @@ export default {
         return {
             tickets: supportTicketsData,
             dialog: false,
+            filterDialog: false,
             selectedTicket: {},
             sortCriterion: 'Date asc',
             sortOptions: [
                 'Date asc',
                 'Date desc',
-                'Priority asc',
-                'Priority desc'
-            ]
+            ],
+            priorityOptions: ['Low', 'Medium', 'High'],
+            filterCustomer: [], 
+            filterPriority: [], 
+            filterDate: '',
         };
     },
+    mounted() {
+        console.log(this.priorityOptions);
+    },
     computed: {
-        sortedTickets() { // sorterer billettene
-            return this.tickets.slice().sort((a, b) => {
-                if (this.sortCriterion === 'Date desc') {
-                    return new Date(b.timestamp) - new Date(a.timestamp);
-                } else if (this.sortCriterion === 'Date ') {
-                    return new Date(a.timestamp) - new Date(b.timestamp)
-                } else if (this.sortCriterion === 'Priority asc') {
-                    const priorityOrder = { low: 1, medium: 2, high: 3 };
-                    return priorityOrder[b.priority] - priorityOrder[a.priority];
-                } else if (this.sortCriterion === 'Priority desc') {
-                    const priorityOrder = { low: 1, medium: 2, high: 3 };
-                    return priorityOrder[a.priority] - priorityOrder[b.priority]
-                }
-                return 0;
-            });
+        customerOptions() {
+            const customers = this.tickets.map(ticket => String(ticket.customer));
+            const uniqueCustomers = [...new Set(customers)];
+            console.log(uniqueCustomers)
+            return uniqueCustomers.sort();
+        },
+        filteredAndSortedTickets() {
+            let tickets = this.tickets;
+
+            if (this.filterCustomer.length) {
+                tickets = tickets.filter(ticket => this.filterCustomer.includes(ticket.customer));
+            }
+
+            if (this.filterPriority.length) {
+                tickets = tickets.filter(ticket => this.filterPriority.map(p => p.toLowerCase()).includes(ticket.priority.toLowerCase()));
+            }
+
+            if (this.filterDate) {
+                tickets = tickets.filter(ticket => new Date(ticket.timestamp).toLocaleDateString() === new Date(this.filterDate).toLocaleDateString());
+            }
+
+            if (this.sortCriterion) {
+                tickets = tickets.sort((a, b) => {
+                    if (this.sortCriterion === 'Date asc') {
+                        return new Date(a.timestamp) - new Date(b.timestamp);
+                    } else if (this.sortCriterion === 'Date desc') {
+                        return new Date(b.timestamp) - new Date(a.timestamp);
+                    }
+                });
+            }
+
+            return tickets;
         }
     },
     methods: {
@@ -93,7 +144,7 @@ export default {
             this.dialog = true;
         },
         getTimeClass(timestamp) { // sjekker hvor lenge siden billetten kom
-            const now = new Date();
+            const now = new Date("2025-01-28T11:15:00Z");
             const ticketDate = new Date(timestamp);
             const diffTime = Math.abs(now - ticketDate);
             const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
@@ -113,7 +164,10 @@ export default {
                 high: 'red'
             };
             return colors[priority];
-        }
+        },
+        selectAllCustomers() {
+            this.filterCustomer = this.customerOptions;
+        },
     }
 };
 </script>
@@ -142,6 +196,7 @@ export default {
     justify-content: space-between;
     align-items: center;
     flex-shrink: 0;
+    height: 6.6vh;
 }
 .sort-select {
     margin-top: 2%;
@@ -174,6 +229,11 @@ export default {
     position: absolute;
     top: 17%;
     right: 2%;
+}
+
+.select_all {
+    margin-bottom: 1vh;
+    border: 1px solid gray;
 }
 
 </style>
