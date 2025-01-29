@@ -8,6 +8,9 @@
       <events />
     </div>
     <div style="width: 50%; height: 50vh;">
+      <service-status />
+    </div>
+    <div style="width: 50%; height: 50vh;">
       <notes />
     </div>
   </div>

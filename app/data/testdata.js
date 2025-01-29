@@ -31,3 +31,8 @@ export const notesData = [
     {id: 4, title: 'Notes4', content: 'Testdata notes 4'},
     {id: 5, title: 'Notes5', content: 'Testdata notes 5 asdfasdfsadfsadfsdafasdfasdfdasfasffasdadsafsfasdfdasdfsafsf'}
 ]
+export const servicesData = [
+    { id: 1, name: 'Service A', status: 'active' },
+    { id: 2, name: 'Service B', status: 'down', errorMessage: 'Network issue' },
+    { id: 3, name: 'Service C', status: 'active' },
+];
