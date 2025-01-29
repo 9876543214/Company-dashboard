@@ -182,10 +182,6 @@ export default {
     display: flex;
     flex-direction: row; 
 }
-.support-tickets-card {
-    height: 50vh;
-
-}
 .support-tickets {
     height: 44.1vh;
     overflow-y: auto;

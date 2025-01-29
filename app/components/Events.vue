@@ -69,9 +69,6 @@ export default {
 </script>
 
 <style scoped>
-.events-card {
-    height: 50vh;
-}
 
 .events-list {
     height: 44.1vh;
