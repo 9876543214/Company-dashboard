@@ -1,25 +1,23 @@
 <template>
-    <div>
-        <v-card class="notes-card">
-            <div class="card-header">
-                <h1>Notes</h1>
-                <v-btn color="primary" @click="dialog = true">+</v-btn>
-            </div>
+    <v-card>
+        <div class="card-header">
+            <h1>Notes</h1>
+            <v-btn color="primary" @click="dialog = true">+</v-btn>
+        </div>
 
-            <v-list lines="one" class="notes-list">
-                <v-list-item
-                    v-for="note in notes"
-                    :key="note.id"
-                    variant="simple"
-                    class="note-item"
-                >
-                    <v-list-item-content>
-                        <v-list-item-title>{{ note.title }}</v-list-item-title>
-                        <v-list-item-text>{{ note.content }}</v-list-item-text>
-                    </v-list-item-content>
-                </v-list-item>
-            </v-list>
-        </v-card>
+        <v-list lines="one" class="notes-list">
+            <v-list-item
+                v-for="note in notes"
+                :key="note.id"
+                variant="simple"
+                class="note-item"
+            >
+                <v-list-item-content>
+                    <v-list-item-title>{{ note.title }}</v-list-item-title>
+                    <v-list-item-text>{{ note.content }}</v-list-item-text>
+                </v-list-item-content>
+            </v-list-item>
+        </v-list>
         <v-dialog v-model="dialog" max-width="500" persistent>
             <v-card>
                 <v-card-title>Add Note</v-card-title>
@@ -33,7 +31,7 @@
                 </v-card-actions>
             </v-card>
         </v-dialog>
-    </div>
+    </v-card>
 </template>
 
 <script>
@@ -67,7 +65,8 @@ export default {
 <style scoped>
 
 .notes-list {
-    height: 44.1vh;
+    height: 100%;
+    position: relative;
     overflow-y: auto;
 }
 

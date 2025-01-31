@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <v-card>
         <v-card class="events-card">
             <div class="card-header">
                 <h1>Upcoming Events</h1>
@@ -32,7 +32,7 @@
                 </v-card-actions>
             </v-card>
         </v-dialog>
-    </div>
+    </v-card>
 </template>
 
 <script>
