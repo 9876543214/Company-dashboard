@@ -3,6 +3,7 @@ import type { DefineComponent, SlotsType } from 'vue'
 type IslandComponent<T extends DefineComponent> = T & DefineComponent<{}, {refresh: () => Promise<void>}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, SlotsType<{ fallback: { error: unknown } }>>
 interface _GlobalComponents {
       'Events': typeof import("../app/components/Events.vue")['default']
+    'FilterSortDialog': typeof import("../app/components/FilterSortDialog.vue")['default']
     'GridComponent': typeof import("../app/components/GridComponent.vue")['default']
     'GridContainer': typeof import("../app/components/GridContainer.vue")['default']
     'GridItem': typeof import("../app/components/GridItem.vue")['default']
@@ -13,6 +14,8 @@ interface _GlobalComponents {
     'NotesComponent': typeof import("../app/components/NotesComponent.vue")['default']
     'ServiceStatus': typeof import("../app/components/ServiceStatus.vue")['default']
     'SupportTickets': typeof import("../app/components/SupportTickets.vue")['default']
+    'TicketDetailsDialog': typeof import("../app/components/TicketDetailsDialog.vue")['default']
+    'TicketListItem': typeof import("../app/components/TicketListItem.vue")['default']
     'EditComponents': typeof import("../app/components/editComponents.vue")['default']
     'NuxtWelcome': typeof import("../node_modules/nuxt/dist/app/components/welcome.vue")['default']
     'NuxtLayout': typeof import("../node_modules/nuxt/dist/app/components/nuxt-layout")['default']
@@ -38,6 +41,7 @@ interface _GlobalComponents {
     'NuxtIsland': typeof import("../node_modules/nuxt/dist/app/components/nuxt-island")['default']
     'NuxtRouteAnnouncer': IslandComponent<typeof import("../node_modules/nuxt/dist/app/components/server-placeholder")['default']>
       'LazyEvents': typeof import("../app/components/Events.vue")['default']
+    'LazyFilterSortDialog': typeof import("../app/components/FilterSortDialog.vue")['default']
     'LazyGridComponent': typeof import("../app/components/GridComponent.vue")['default']
     'LazyGridContainer': typeof import("../app/components/GridContainer.vue")['default']
     'LazyGridItem': typeof import("../app/components/GridItem.vue")['default']
@@ -48,6 +52,8 @@ interface _GlobalComponents {
     'LazyNotesComponent': typeof import("../app/components/NotesComponent.vue")['default']
     'LazyServiceStatus': typeof import("../app/components/ServiceStatus.vue")['default']
     'LazySupportTickets': typeof import("../app/components/SupportTickets.vue")['default']
+    'LazyTicketDetailsDialog': typeof import("../app/components/TicketDetailsDialog.vue")['default']
+    'LazyTicketListItem': typeof import("../app/components/TicketListItem.vue")['default']
     'LazyEditComponents': typeof import("../app/components/editComponents.vue")['default']
     'LazyNuxtWelcome': typeof import("../node_modules/nuxt/dist/app/components/welcome.vue")['default']
     'LazyNuxtLayout': typeof import("../node_modules/nuxt/dist/app/components/nuxt-layout")['default']
@@ -79,6 +85,7 @@ declare module 'vue' {
 }
 
 export const Events: typeof import("../app/components/Events.vue")['default']
+export const FilterSortDialog: typeof import("../app/components/FilterSortDialog.vue")['default']
 export const GridComponent: typeof import("../app/components/GridComponent.vue")['default']
 export const GridContainer: typeof import("../app/components/GridContainer.vue")['default']
 export const GridItem: typeof import("../app/components/GridItem.vue")['default']
@@ -89,6 +96,8 @@ export const NoteItem: typeof import("../app/components/NoteItem.vue")['default'
 export const NotesComponent: typeof import("../app/components/NotesComponent.vue")['default']
 export const ServiceStatus: typeof import("../app/components/ServiceStatus.vue")['default']
 export const SupportTickets: typeof import("../app/components/SupportTickets.vue")['default']
+export const TicketDetailsDialog: typeof import("../app/components/TicketDetailsDialog.vue")['default']
+export const TicketListItem: typeof import("../app/components/TicketListItem.vue")['default']
 export const EditComponents: typeof import("../app/components/editComponents.vue")['default']
 export const NuxtWelcome: typeof import("../node_modules/nuxt/dist/app/components/welcome.vue")['default']
 export const NuxtLayout: typeof import("../node_modules/nuxt/dist/app/components/nuxt-layout")['default']
@@ -114,6 +123,7 @@ export const Body: typeof import("../node_modules/nuxt/dist/head/runtime/compone
 export const NuxtIsland: typeof import("../node_modules/nuxt/dist/app/components/nuxt-island")['default']
 export const NuxtRouteAnnouncer: IslandComponent<typeof import("../node_modules/nuxt/dist/app/components/server-placeholder")['default']>
 export const LazyEvents: typeof import("../app/components/Events.vue")['default']
+export const LazyFilterSortDialog: typeof import("../app/components/FilterSortDialog.vue")['default']
 export const LazyGridComponent: typeof import("../app/components/GridComponent.vue")['default']
 export const LazyGridContainer: typeof import("../app/components/GridContainer.vue")['default']
 export const LazyGridItem: typeof import("../app/components/GridItem.vue")['default']
@@ -124,6 +134,8 @@ export const LazyNoteItem: typeof import("../app/components/NoteItem.vue")['defa
 export const LazyNotesComponent: typeof import("../app/components/NotesComponent.vue")['default']
 export const LazyServiceStatus: typeof import("../app/components/ServiceStatus.vue")['default']
 export const LazySupportTickets: typeof import("../app/components/SupportTickets.vue")['default']
+export const LazyTicketDetailsDialog: typeof import("../app/components/TicketDetailsDialog.vue")['default']
+export const LazyTicketListItem: typeof import("../app/components/TicketListItem.vue")['default']
 export const LazyEditComponents: typeof import("../app/components/editComponents.vue")['default']
 export const LazyNuxtWelcome: typeof import("../node_modules/nuxt/dist/app/components/welcome.vue")['default']
 export const LazyNuxtLayout: typeof import("../node_modules/nuxt/dist/app/components/nuxt-layout")['default']
