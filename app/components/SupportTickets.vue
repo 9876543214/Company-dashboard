@@ -55,9 +55,9 @@
                 <v-list-item title="Select All" @click="toggleSelectAllCustomers">
                   <template v-slot:prepend>
                     <v-checkbox-btn
-                    :color="likesSomeCustomers ? 'indigo-darken-4' : undefined"
-                    :indeterminate="likesSomeCustomers && !likesAllCustomers"
-                    :model-value="likesAllCustomers"
+                    :color="selectSomeCustomers ? 'indigo-darken-4' : undefined"
+                    :indeterminate="selectSomeCustomers && !selectAllCustomers"
+                    :model-value="selectAllCustomers"
                     ></v-checkbox-btn>
                   </template>
                 </v-list-item>
@@ -137,13 +137,12 @@
             }
           });
         }
-  
         return tickets;
       },
-      likesAllCustomers() {
+      selectAllCustomers() {
         return this.filterCustomer.length === this.customerOptions.length;
       },
-      likesSomeCustomers() {
+      selectSomeCustomers() {
         return this.filterCustomer.length > 0;
       },
     },
@@ -175,7 +174,7 @@
         return colors[priority];
       },
       toggleSelectAllCustomers() {
-        if (this.likesAllCustomers) {
+        if (this.selectAllCustomers) {
           this.filterCustomer = [];
         } else {
           this.filterCustomer = this.customerOptions.slice();
