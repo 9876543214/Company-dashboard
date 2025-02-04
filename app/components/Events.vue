@@ -1,5 +1,5 @@
 <template>
-    <v-card>
+    <v-card class="events-card">
         <v-card class="events-card">
             <div class="card-header">
                 <h1>Upcoming Events</h1>
@@ -69,6 +69,11 @@ export default {
 </script>
 
 <style scoped>
+
+.events-card {
+    height: 100%;
+    color: white;
+}
 
 .events-list {
     height: 44.1vh;

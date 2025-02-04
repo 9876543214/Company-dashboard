@@ -1,5 +1,5 @@
 <template>
-    <v-card>
+    <v-card class="service-status-card">
         <div class="card-header">
             <h1>Service Status</h1>
         </div>
@@ -65,6 +65,11 @@ export default {
 </script>
 
 <style scoped>
+
+.service-status-card {
+    height: 100%;
+    color: white;
+}
 .service-item {
     width: 99%;
     border-radius: 10px;
@@ -77,7 +82,7 @@ export default {
 }
 
 .service-status {
-    height: 44.1vh;
+    height: calc(100% - 6.6vh);
     overflow-y: auto;
 }
 
