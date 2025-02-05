@@ -1,5 +1,5 @@
 <template>
-    <v-card>
+    <v-card class="notes-card">
         <div class="card-header">
             <h1>Notes</h1>
             <v-btn color="primary" @click="dialog = true">+</v-btn>
@@ -63,6 +63,13 @@ export default {
 </script>
 
 <style scoped>
+
+.notes-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    color: white;
+}
 
 .notes-list {
     height: 100%;

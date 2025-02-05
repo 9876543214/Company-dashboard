@@ -1,5 +1,5 @@
 <template>
-    <v-card>
+    <v-card class="support-ticket-card">
       <div class="card-header">
         <h1>Support tickets</h1>
         <v-btn color="primary" @click="filterDialog = true">Filter & Sort</v-btn>
@@ -186,6 +186,11 @@
   </script>
   
   <style scoped>
+
+  .support-ticket-card {
+    height: 100%;
+    color: white;
+  }
 
   .support-ticket {
     width: 99%;
