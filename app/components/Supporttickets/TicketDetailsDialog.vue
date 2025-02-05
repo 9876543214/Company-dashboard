@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="internalDialog" max-width="500" @click:outside="closeDialog">
+  <v-dialog :model-value="dialog" @update:model-value="$emit('update:dialog', $event)" max-width="500" @click:outside="closeDialog">
     <v-card>
       <v-card-title>Ticket Details</v-card-title>
       <v-card-text v-if="selectedTicket">
@@ -17,35 +17,14 @@
 
 <script>
 export default {
+  name: 'TicketDetailsDialog',
   props: {
     dialog: Boolean,
     selectedTicket: Object,
   },
-  data() {
-    return {
-      internalDialog: this.dialog,
-    };
-  },
-  watch: {
-    dialog(val) {
-      console.log('Dialog prop changed:', val);
-      this.internalDialog = val;
-    },
-    internalDialog(val) {
-      console.log('Internal dialog changed:', val);
-      this.$emit('update:dialog', val);
-    },
-    selectedTicket(newTicket) {
-      console.log('Selected ticket changed:', newTicket);
-      if (newTicket) {
-        this.internalDialog = true;
-      }
-    },
-  },
   methods: {
     closeDialog() {
       console.log('Closing dialog');
-      this.internalDialog = false;
       this.$emit('update:dialog', false);
     },
   },

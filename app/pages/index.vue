@@ -184,12 +184,13 @@
           <v-btn @click="toggleGrid2">Edit components</v-btn>
         </v-app-bar>
       </div>
-      <GridComponent />
+      <GridComponent :showGrid2="showGrid2" />
     </v-app>
   </template>
   
   <script>
-  import GridComponent from "@/components/GridComponent.vue";
+  import GridComponent from "@/components/Gridsystem/GridComponent.vue";
+  import { ref } from "vue";
   
   export default {
     components: {

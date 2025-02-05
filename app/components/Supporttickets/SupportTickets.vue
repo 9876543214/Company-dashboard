@@ -15,28 +15,32 @@
     </v-list>
 
     <TicketDetailsDialog
-      :key="selectedTicket ? selectedTicket.id : null"
-      :dialog.sync="dialog"
+      :dialog="dialog"
       :selectedTicket="selectedTicket"
+      @update:dialog="dialog = $event"
     />
 
     <FilterSortDialog
-      :filterDialog.sync="filterDialog"
+      :filterDialog="filterDialog"
       :customerOptions="customerOptions"
-      :filterCustomer.sync="filterCustomer"
+      :filterCustomer="filterCustomer"
       :priorityOptions="priorityOptions"
-      :filterPriority.sync="filterPriority"
-      :sortCriterion.sync="sortCriterion"
+      :filterPriority="filterPriority"
+      :sortCriterion="sortCriterion"
       :sortOptions="sortOptions"
       :selectAllCustomers="selectAllCustomers"
       :selectSomeCustomers="selectSomeCustomers"
+      @update:filterDialog="filterDialog = $event"
+      @update:filterCustomer="filterCustomer = $event"
+      @update:filterPriority="filterPriority = $event"
+      @update:sortCriterion="sortCriterion = $event"
       @toggle-select-all-customers="toggleSelectAllCustomers"
     />
   </v-card>
 </template>
 
 <script>
-import { supportTicketsData } from '../data/testdata.js';
+import { supportTicketsData } from '../../data/testdata.js';
 import TicketListItem from './TicketListItem.vue';
 import TicketDetailsDialog from './TicketDetailsDialog.vue';
 import FilterSortDialog from './FilterSortDialog.vue';
