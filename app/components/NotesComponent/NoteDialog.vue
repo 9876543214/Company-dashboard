@@ -11,14 +11,14 @@
         </v-card-text>
         <v-card-actions>
           <v-btn color="primary" @click="addNote">Submit</v-btn>
-          <v-btn @click="updateDialog(false)">Close</v-btn>
+          <v-btn @click="updateDialog(false)">Cancel</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
   </template>
   
   <script>
-  import { notesData } from '../data/testdata.js';
+  import { notesData } from '../../data/testdata.js';
   
   export default {
     name: 'NoteDialog',

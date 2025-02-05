@@ -5,10 +5,10 @@
 </template>
   
   <script>
-import SupportTickets from "@/components/Supporttickets/SupportTickets.vue";
+import SupportTickets from "@/components/SupportTicketsComponent/SupportTickets.vue";
 import Events from "@/components/EventsComponent/Events.vue";
 import ServiceStatus from "@/components/ServiceStatus.vue";
-import NotesComponent from "@/components/NotesComponent.vue";
+import NotesComponent from "~/components/NotesComponent/NotesComponent.vue";
 
 export default {
   props: {
