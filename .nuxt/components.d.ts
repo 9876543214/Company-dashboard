@@ -2,11 +2,13 @@
 import type { DefineComponent, SlotsType } from 'vue'
 type IslandComponent<T extends DefineComponent> = T & DefineComponent<{}, {refresh: () => Promise<void>}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, SlotsType<{ fallback: { error: unknown } }>>
 interface _GlobalComponents {
-      'Events': typeof import("../app/components/Events.vue")['default']
+      'EventsComponentEventDetailsDialog': typeof import("../app/components/EventsComponent/EventDetailsDialog.vue")['default']
+    'EventsComponentEventList': typeof import("../app/components/EventsComponent/EventList.vue")['default']
+    'EventsComponentEventListItem': typeof import("../app/components/EventsComponent/EventListItem.vue")['default']
+    'EventsComponentEvents': typeof import("../app/components/EventsComponent/Events.vue")['default']
     'GridsystemGridComponent': typeof import("../app/components/Gridsystem/GridComponent.vue")['default']
     'GridsystemGridContainer': typeof import("../app/components/Gridsystem/GridContainer.vue")['default']
     'GridsystemGridItem': typeof import("../app/components/Gridsystem/GridItem.vue")['default']
-    'HeaderComponent': typeof import("../app/components/HeaderComponent.vue")['default']
     'HelloWorld': typeof import("../app/components/HelloWorld.vue")['default']
     'NoteDialog': typeof import("../app/components/NoteDialog.vue")['default']
     'NoteItem': typeof import("../app/components/NoteItem.vue")['default']
@@ -40,11 +42,13 @@ interface _GlobalComponents {
     'Body': typeof import("../node_modules/nuxt/dist/head/runtime/components")['Body']
     'NuxtIsland': typeof import("../node_modules/nuxt/dist/app/components/nuxt-island")['default']
     'NuxtRouteAnnouncer': IslandComponent<typeof import("../node_modules/nuxt/dist/app/components/server-placeholder")['default']>
-      'LazyEvents': typeof import("../app/components/Events.vue")['default']
+      'LazyEventsComponentEventDetailsDialog': typeof import("../app/components/EventsComponent/EventDetailsDialog.vue")['default']
+    'LazyEventsComponentEventList': typeof import("../app/components/EventsComponent/EventList.vue")['default']
+    'LazyEventsComponentEventListItem': typeof import("../app/components/EventsComponent/EventListItem.vue")['default']
+    'LazyEventsComponentEvents': typeof import("../app/components/EventsComponent/Events.vue")['default']
     'LazyGridsystemGridComponent': typeof import("../app/components/Gridsystem/GridComponent.vue")['default']
     'LazyGridsystemGridContainer': typeof import("../app/components/Gridsystem/GridContainer.vue")['default']
     'LazyGridsystemGridItem': typeof import("../app/components/Gridsystem/GridItem.vue")['default']
-    'LazyHeaderComponent': typeof import("../app/components/HeaderComponent.vue")['default']
     'LazyHelloWorld': typeof import("../app/components/HelloWorld.vue")['default']
     'LazyNoteDialog': typeof import("../app/components/NoteDialog.vue")['default']
     'LazyNoteItem': typeof import("../app/components/NoteItem.vue")['default']
@@ -84,11 +88,13 @@ declare module 'vue' {
   export interface GlobalComponents extends _GlobalComponents { }
 }
 
-export const Events: typeof import("../app/components/Events.vue")['default']
+export const EventsComponentEventDetailsDialog: typeof import("../app/components/EventsComponent/EventDetailsDialog.vue")['default']
+export const EventsComponentEventList: typeof import("../app/components/EventsComponent/EventList.vue")['default']
+export const EventsComponentEventListItem: typeof import("../app/components/EventsComponent/EventListItem.vue")['default']
+export const EventsComponentEvents: typeof import("../app/components/EventsComponent/Events.vue")['default']
 export const GridsystemGridComponent: typeof import("../app/components/Gridsystem/GridComponent.vue")['default']
 export const GridsystemGridContainer: typeof import("../app/components/Gridsystem/GridContainer.vue")['default']
 export const GridsystemGridItem: typeof import("../app/components/Gridsystem/GridItem.vue")['default']
-export const HeaderComponent: typeof import("../app/components/HeaderComponent.vue")['default']
 export const HelloWorld: typeof import("../app/components/HelloWorld.vue")['default']
 export const NoteDialog: typeof import("../app/components/NoteDialog.vue")['default']
 export const NoteItem: typeof import("../app/components/NoteItem.vue")['default']
@@ -122,11 +128,13 @@ export const Html: typeof import("../node_modules/nuxt/dist/head/runtime/compone
 export const Body: typeof import("../node_modules/nuxt/dist/head/runtime/components")['Body']
 export const NuxtIsland: typeof import("../node_modules/nuxt/dist/app/components/nuxt-island")['default']
 export const NuxtRouteAnnouncer: IslandComponent<typeof import("../node_modules/nuxt/dist/app/components/server-placeholder")['default']>
-export const LazyEvents: typeof import("../app/components/Events.vue")['default']
+export const LazyEventsComponentEventDetailsDialog: typeof import("../app/components/EventsComponent/EventDetailsDialog.vue")['default']
+export const LazyEventsComponentEventList: typeof import("../app/components/EventsComponent/EventList.vue")['default']
+export const LazyEventsComponentEventListItem: typeof import("../app/components/EventsComponent/EventListItem.vue")['default']
+export const LazyEventsComponentEvents: typeof import("../app/components/EventsComponent/Events.vue")['default']
 export const LazyGridsystemGridComponent: typeof import("../app/components/Gridsystem/GridComponent.vue")['default']
 export const LazyGridsystemGridContainer: typeof import("../app/components/Gridsystem/GridContainer.vue")['default']
 export const LazyGridsystemGridItem: typeof import("../app/components/Gridsystem/GridItem.vue")['default']
-export const LazyHeaderComponent: typeof import("../app/components/HeaderComponent.vue")['default']
 export const LazyHelloWorld: typeof import("../app/components/HelloWorld.vue")['default']
 export const LazyNoteDialog: typeof import("../app/components/NoteDialog.vue")['default']
 export const LazyNoteItem: typeof import("../app/components/NoteItem.vue")['default']
