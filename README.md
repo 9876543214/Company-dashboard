@@ -17,7 +17,7 @@ This project is a dashboard application built with Nuxt.js, Vue.js, and Vueify. 
 ```
      # npm
 
-    npm install
+     npm install
      
      # pnpm
 
@@ -36,7 +36,7 @@ This project is a dashboard application built with Nuxt.js, Vue.js, and Vueify. 
 ```
      # npm
 
-    npm run dev
+     npm run dev
      
      # pnpm
 
