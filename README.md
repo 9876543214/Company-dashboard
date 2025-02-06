@@ -1,77 +1,85 @@
-# Nuxt 3 Minimal Starter
+# Dashboard Project
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+## Description
+This project is a dashboard application built with Nuxt.js, Vue.js, and Vueify. It features a grid system for organizing components.
 
-## Setup
+## Prerequisites
+- npm, pnpm, yarn, or bun
 
-Make sure to install the dependencies:
+## Development Setup
 
-```bash
-# npm
-npm install
+1. **Clone the repository**:
+   <!-- Put the following code block in backticks (```) with bash language identifier -->
+   git clone https://github.com/your-username/your-repository.git
+   cd your-repository
 
-# pnpm
-pnpm install
+2. **Install dependencies**:
+```
+     # npm
 
-# yarn
-yarn install
+    npm install
+     
+     # pnpm
 
-# bun
-bun install
+     pnpm install
+     
+     # yarn
+
+     yarn install
+
+     # bun
+     
+     bun install
 ```
 
-## Development Server
-
-Start the development server on `http://localhost:3000`:
-
-```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm run dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
+3. **Start the development server**:
 ```
+     # npm
 
-## Production
+    npm run dev
+     
+     # pnpm
 
-Build the application for production:
+     pnpm run dev
+     
+     # yarn
 
-```bash
-# npm
-npm run build
+     yarn dev
 
-# pnpm
-pnpm run build
-
-# yarn
-yarn build
-
-# bun
-bun run build
+     # bun
+     
+     bun run dev
 ```
+## Recommended Extensions
+Here are some recommended extensions for a better development experience:
+- **Vetur**: Vue tooling for VS Code
+- **ESLint**: Integrates ESLint into VS Code
+- **Prettier - Code formatter**: Code formatter for consistent code style
+- **Nuxt.js DevTools**: Nuxt.js development tools
 
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm run preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
+## Project Structure
 ```
+your-repository/
+├── app/
+│   ├── components/
+│   ├── data/
+│   ├── pages/
+│   │   └── index.vue
+│   └── layouts/
+├── nuxt.config.ts
+├── package.json
+├── tsconfig.json
+├── .gitignore
+└── README.md
+```
+- **app/components/**: Contains Vue components.
+- **app/data/**: Contains test data files.
+- **app/pages/**: Contains page components, including the main `index.vue`.
+- **app/layouts/**: Contains layout components.
+- **nuxt.config.ts**: Nuxt.js configuration file.
+- **package.json**: Project dependencies and scripts.
+- **tsconfig.json**: TypeScript configuration file.
+- **.gitignore**: Specifies files and directories to be ignored by Git.
+- **README.md**: Project documentation.
 
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
-# Company-dashboard
-# Company-dashboard
+
