@@ -9,12 +9,12 @@ This project is a dashboard application built with Nuxt.js, Vue.js, and Vueify. 
 ## Development Setup
 
 1. **Clone the repository**:
-   <!-- Put the following code block in backticks (```) with bash language identifier -->
-   git clone https://github.com/your-username/your-repository.git
+   ```bash
+   git clone https://github.com/9876543214/Company-dashboard.git
    cd your-repository
-
+   ```
 2. **Install dependencies**:
-```
+```bash
      # npm
 
      npm install
@@ -33,7 +33,7 @@ This project is a dashboard application built with Nuxt.js, Vue.js, and Vueify. 
 ```
 
 3. **Start the development server**:
-```
+```bash
      # npm
 
      npm run dev
@@ -74,7 +74,7 @@ your-repository/
 ```
 - **app/components/**: Contains Vue components.
 - **app/data/**: Contains test data files.
-- **app/pages/**: Contains page components, including the main `index.vue`.
+- **app/pages/**: Contains page the main page `index.vue`.
 - **app/layouts/**: Contains layout components.
 - **nuxt.config.ts**: Nuxt.js configuration file.
 - **package.json**: Project dependencies and scripts.
