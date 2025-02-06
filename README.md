@@ -11,7 +11,7 @@ This project is a dashboard application built with Nuxt.js, Vue.js, and Vueify. 
 1. **Clone the repository**:
 ```bash
      git clone https://github.com/9876543214/Company-dashboard.git
-     cd your-repository
+     cd Company-dashboard
 ``` 
 2. **Install dependencies**:
 ```bash
