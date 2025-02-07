@@ -76,6 +76,7 @@ export default {
       const index = this.notes.findIndex(n => n.id === note.id);
       if (index !== -1) {
         this.notes.splice(index, 1);
+        console.log(this.notes)
       }
     },
   },
