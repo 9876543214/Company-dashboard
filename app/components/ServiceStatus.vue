@@ -25,6 +25,7 @@
             <v-card>
                 <v-card-title>Service Details</v-card-title>
                 <v-card-text>
+                    <p><strong>Service:</strong> {{ selectedService.name }}</p>
                     <p><strong>Status:</strong> {{ selectedService.status }}</p>
                     <p v-if="selectedService.status === 'down'"><strong>Error Message:</strong> {{ selectedService.errorMessage }}</p>
                 </v-card-text>

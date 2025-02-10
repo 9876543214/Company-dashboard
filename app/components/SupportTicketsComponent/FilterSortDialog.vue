@@ -9,10 +9,21 @@
             multiple
             chips
             :items="customerOptions"
-            :value="filterCustomer"
-            @input="$emit('update:filterCustomer', $event)"
+            :model-value="filterCustomer"
+            @update:model-value="onFilterCustomerUpdate"
             label="Customer"
           >
+            <template v-slot:selection="{ item, index }">
+              <v-chip v-if="index < 3">
+                <span>{{ item }}</span>
+              </v-chip>
+              <span
+                v-if="index === 3"
+                class="text-grey text-caption align-self-center"
+              >
+                (+{{ filterCustomer.length - 3 }} others)
+              </span>
+            </template>
             <template v-slot:prepend-item>
               <v-list-item title="Select All" @click="toggleSelectAllCustomers">
                 <template v-slot:prepend>
@@ -31,13 +42,13 @@
             chips
             multiple
             :items="priorityOptions"
-            :value="filterPriority"
-            @input="$emit('update:filterPriority', $event)"
+            :model-value="filterPriority"
+            @update:model-value="$emit('update:filterPriority', $event)"
             label="Priority"
           ></v-select>
           <v-select
-            :value="sortCriterion"
-            @input="$emit('update:sortCriterion', $event)"
+            :model-value="sortCriterion"
+            @update:model-value="$emit('update:sortCriterion', $event)"
             :items="sortOptions"
             label="Sort by"
           ></v-select>
@@ -65,7 +76,12 @@ export default {
   },
   methods: {
     toggleSelectAllCustomers() {
+      console.log('toggleSelectAllCustomers called');
       this.$emit('toggle-select-all-customers');
+    },
+    onFilterCustomerUpdate(value) {
+      console.log('filterCustomer updated:', value);
+      this.$emit('update:filterCustomer', value);
     },
   },
 };

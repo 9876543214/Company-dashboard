@@ -102,22 +102,19 @@ export default {
       return this.filterCustomer.length === this.customerOptions.length;
     },
     selectSomeCustomers() {
-      return this.filterCustomer.length > 0;
+      return this.filterCustomer.length > 0 && !this.selectAllCustomers;
     },
   },
   methods: {
     showTicketDetails(ticket) {
-      console.log('Showing ticket details:', ticket);
       this.selectedTicket = ticket;
-      console.log('Selected ticket set:', this.selectedTicket);
       this.dialog = true;
-      console.log('Dialog set to true:', this.dialog);
     },
     toggleSelectAllCustomers() {
       if (this.selectAllCustomers) {
         this.filterCustomer = [];
       } else {
-        this.filterCustomer = this.customerOptions.slice();
+        this.filterCustomer = [...this.customerOptions];
       }
     },
   },
