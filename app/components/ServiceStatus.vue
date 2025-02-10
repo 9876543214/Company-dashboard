@@ -7,8 +7,22 @@ const dialog = ref(false);
 const selectedService = ref({});
 
 async function fetchServices() {
-  const { data } = await useFetch("/api/services");
-  services.value = data.value;
+  try {
+    const response = await fetch("/api/services");
+    console.log("Fetch response:", response);
+    const data = await response.json();
+    console.log("Fetched services:", data);
+
+    if (!Array.isArray(data)) {
+      throw new Error("Invalid data format");
+    }
+
+    services.value = data;
+    console.log("Fetched services:", services.value);
+  } catch (error) {
+    console.error("Error fetching services:", error);
+    services.value = [];
+  }
 }
 
 onMounted(() => {

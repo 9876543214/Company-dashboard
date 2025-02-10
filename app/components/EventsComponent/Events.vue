@@ -12,13 +12,20 @@ const headerText = ref("");
 
 async function fetchEvents() {
   try {
-    const { data } = await useFetch("/api/events");
-    console.log("Events: fetchEvents", data);
-    events.value = data.value || [];
+    const response = await fetch("/api/events");
+    console.log("Fetch response:", response);
+    const data = await response.json();
+    console.log("Fetched events:", data);
+
+    if (!Array.isArray(data)) {
+      throw new Error("Invalid data format");
+    }
+
+    events.value = data;
+    console.log("Fetched events:", events.value);
   } catch (error) {
     console.error("Error fetching events:", error);
     events.value = [];
-  } finally {
   }
 }
 

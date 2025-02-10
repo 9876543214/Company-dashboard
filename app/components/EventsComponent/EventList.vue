@@ -1,4 +1,4 @@
-  <script setup>
+<script setup>
 import { ref, watch, nextTick, onMounted } from "vue";
 import EventListItem from "./EventListItem.vue";
 
@@ -15,6 +15,7 @@ const emit = defineEmits(["toggle-past-events", "show-event-details"]);
 const delayedFilteredEvents = ref([]);
 const delayedNextEvent = ref(null);
 const isButtonDisabled = ref(false);
+const isFirstLoad = ref(true);
 
 function handleTogglePastEvents() {
   isButtonDisabled.value = true;
@@ -29,27 +30,22 @@ function handleShowEventDetails(eventItem) {
   emit("show-event-details", eventItem);
 }
 
-function handleBeforeEnter(element) {
-  element.style.opacity = 0;
-  element.style.transform = "translateY(30px)";
-}
-
-function handleAfterEnter(element) {
-  element.style.transition = "all 0.5s ease";
-  element.style.opacity = 1;
-  element.style.transform = "translateY(0)";
-}
-
 watch(
   () => props.filteredEvents,
   (newEvents) => {
     delayedFilteredEvents.value = [];
     delayedNextEvent.value = null;
     nextTick(() => {
-      setTimeout(() => {
+      if (isFirstLoad.value) {
         delayedFilteredEvents.value = newEvents;
         delayedNextEvent.value = props.nextEvent;
-      }, 530);
+        isFirstLoad.value = false;
+      } else {
+        setTimeout(() => {
+          delayedFilteredEvents.value = newEvents;
+          delayedNextEvent.value = props.nextEvent;
+        }, 530);
+      }
     });
   }
 );
@@ -99,10 +95,8 @@ onMounted(() => {
     </v-list>
   </div>
 </template>
-  
 
-  
-  <style scoped>
+<style scoped>
 .events-list {
   height: 44.1vh;
   overflow-y: auto;
