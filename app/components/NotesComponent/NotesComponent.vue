@@ -1,12 +1,75 @@
+<script setup>
+import { ref } from "vue";
+import { useFetch } from "#app";
+import NoteItem from "./NoteItem.vue";
+import NoteDialog from "./NoteDialog.vue";
+import EditNoteDialog from "./EditNoteDialog.vue";
+
+const notes = ref([]);
+const newNote = ref({
+  title: "",
+  content: "",
+});
+const dialog = ref(false);
+const editDialog = ref(false);
+const selectedNote = ref(null);
+
+async function getnotes() {
+  const { data } = await useFetch("/api/notes");
+  notes.value = data.value;
+  console.log(notes.value);
+}
+
+getnotes();
+
+function updateNotes(updatedNotes) {
+  notes.value = updatedNotes;
+}
+
+function updateDialog(value) {
+  dialog.value = value;
+}
+
+function updateEditDialog(value) {
+  editDialog.value = value;
+}
+
+function editNote(note) {
+  selectedNote.value = { ...note };
+  updateEditDialog(true);
+}
+
+function saveNote(editedNote) {
+  const index = notes.value.findIndex((note) => note.id === editedNote.id);
+  if (index !== -1) {
+    notes.value.splice(index, 1, editedNote);
+  }
+}
+
+function deleteNote(note) {
+  const index = notes.value.findIndex((n) => n.id === note.id);
+  if (index !== -1) {
+    notes.value.splice(index, 1);
+    console.log(notes.value);
+  }
+}
+</script>
+
+
 <template>
   <v-card class="notes-card">
     <div class="card-header">
       <h1>Notes</h1>
-      <NoteDialog :dialog="dialog" :newNote="newNote" @update:notes="updateNotes" @update:dialog="updateDialog" />
+      <NoteDialog
+        :dialog="dialog"
+        :newNote="newNote"
+        @update:notes="updateNotes"
+        @update:dialog="updateDialog"
+      />
     </div>
 
     <v-list lines="one" class="notes-list">
-      <template v-if="notes.length">
+      <template v-if="notes?.length">
         <v-list-item
           v-for="note in notes"
           :key="note.id"
@@ -23,65 +86,17 @@
       </template>
     </v-list>
 
-    <EditNoteDialog :dialog="editDialog" :note="selectedNote" @update:dialog="updateEditDialog" @save-note="saveNote" @delete-note="deleteNote" />
+    <EditNoteDialog
+      :dialog="editDialog"
+      :note="selectedNote"
+      @update:dialog="updateEditDialog"
+      @save-note="saveNote"
+      @delete-note="deleteNote"
+    />
   </v-card>
 </template>
 
-<script>
-import { notesData } from '../../data/testdata.js';
-import NoteItem from './NoteItem.vue';
-import NoteDialog from './NoteDialog.vue';
-import EditNoteDialog from './EditNoteDialog.vue';
 
-export default {
-  name: 'Notes',
-  components: {
-    NoteItem,
-    NoteDialog,
-    EditNoteDialog,
-  },
-  data() {
-    return {
-      notes: notesData,
-      newNote: {
-        title: '',
-        content: '',
-      },
-      dialog: false,
-      editDialog: false,
-      selectedNote: null,
-    };
-  },
-  methods: {
-    updateNotes(updatedNotes) {
-      this.notes = updatedNotes;
-    },
-    updateDialog(value) {
-      this.dialog = value;
-    },
-    updateEditDialog(value) {
-      this.editDialog = value;
-    },
-    editNote(note) {
-      this.selectedNote = { ...note };
-      this.updateEditDialog(true);
-    },
-    saveNote(editedNote) {
-      const index = this.notes.findIndex(note => note.id === editedNote.id);
-      if (index !== -1) {
-        this.notes.splice(index, 1, editedNote);
-      }
-    },
-    deleteNote(note) {
-      const index = this.notes.findIndex(n => n.id === note.id);
-      if (index !== -1) {
-        this.notes.splice(index, 1);
-        console.log(this.notes)
-      }
-    },
-  },
-};
-</script>
 
 <style scoped>
 .notes-card {
