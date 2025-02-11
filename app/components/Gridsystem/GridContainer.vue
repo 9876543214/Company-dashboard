@@ -74,30 +74,32 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="grid-container">
-    <div
-      class="grid-stack"
-      id="grid2"
-      :class="[
-        'gs-6 gs-id-5 grid-stack-animate ui-droppable',
-        { hidden: !showGrid2 },
-      ]"
-    >
-      <p id="infotext">Move items here to hide them</p>
-    </div>
-    <div
-      class="grid-stack"
-      id="grid1"
-      :class="[
-        'gs-12 gs-id-0 grid-stack-animate ui-droppable',
-        { expanded: showGrid2 },
-      ]"
-    >
-      <GridItem
-        v-for="component in selectedComponents"
-        :key="component"
-        :component="component"
-      />
+  <div class="grid-container-container">
+    <div class="grid-container">
+      <div
+        class="grid-stack"
+        id="grid2"
+        :class="[
+          'gs-6 gs-id-5 grid-stack-animate ui-droppable',
+          { hidden: !showGrid2 },
+        ]"
+      >
+        <p id="infotext">Drag items here to hide them</p>
+      </div>
+      <div
+        class="grid-stack"
+        id="grid1"
+        :class="[
+          'gs-12 gs-id-0 grid-stack-animate ui-droppable',
+          { expanded: showGrid2 },
+        ]"
+      >
+        <GridItem
+          v-for="component in selectedComponents"
+          :key="component"
+          :component="component"
+        />
+      </div>
     </div>
   </div>
 </template>

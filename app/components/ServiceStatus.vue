@@ -1,6 +1,5 @@
 <script setup>
 import { ref, onMounted } from "vue";
-import { useFetch } from "#app";
 
 const services = ref([]);
 const dialog = ref(false);
@@ -9,19 +8,14 @@ const selectedService = ref({});
 async function fetchServices() {
   try {
     const response = await fetch("/api/services");
-    console.log("Fetch response:", response);
-    const data = await response.json();
-    console.log("Fetched services:", data);
-
-    if (!Array.isArray(data)) {
-      throw new Error("Invalid data format");
+    if (!response.ok) {
+      throw new Error(`Error fetching services: ${response.statusText}`);
     }
-
+    const data = await response.json();
     services.value = data;
     console.log("Fetched services:", services.value);
   } catch (error) {
     console.error("Error fetching services:", error);
-    services.value = [];
   }
 }
 

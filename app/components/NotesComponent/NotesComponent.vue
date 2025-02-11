@@ -15,15 +15,108 @@ const editDialog = ref(false);
 const selectedNote = ref(null);
 
 async function getnotes() {
-  const { data } = await useFetch("/api/notes");
-  notes.value = data.value;
-  console.log(notes.value);
+  try {
+    const { data } = await useFetch("/api/notes");
+    notes.value = data.value;
+    console.log("Fetched notes:", notes.value);
+  } catch (error) {
+    console.error("Error fetching notes:", error);
+  }
 }
 
 getnotes();
 
 function updateNotes(updatedNotes) {
   notes.value = updatedNotes;
+}
+
+async function addNote() {
+  console.log("addNote function called");
+  if (newNote.value.title && newNote.value.content) {
+    try {
+      const response = await fetch("/api/notes", {
+        method: "POST",
+        body: JSON.stringify(newNote.value),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      console.log("Response status:", response.status);
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error("Failed to add note:", errorData);
+        return;
+      }
+
+      const addedNote = await response.json();
+      console.log("Added note:", addedNote);
+
+      getnotes();
+
+      newNote.value.title = "";
+      newNote.value.content = "";
+      updateDialog(false);
+    } catch (error) {
+      console.error("Error adding note:", error);
+    }
+  }
+}
+
+async function saveNote(editedNote) {
+  console.log("saveNote function called");
+  try {
+    const response = await fetch(`/api/notes/${editedNote.id}`, {
+      method: "PUT",
+      body: JSON.stringify(editedNote),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    console.log("Response status:", response.status);
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error("Failed to save note:", errorData);
+      return;
+    }
+
+    const updatedNote = await response.json();
+    console.log("Updated note:", updatedNote);
+
+    getnotes();
+    updateEditDialog(false);
+  } catch (error) {
+    console.error("Error saving note:", error);
+  }
+}
+
+async function deleteNote(note) {
+  console.log("deleteNote function called");
+  try {
+    const response = await fetch(`/api/notes/${note.id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    console.log("Response status:", response.status);
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error("Failed to delete note:", errorData);
+      return;
+    }
+
+    console.log("Deleted note:", note);
+
+    getnotes();
+  } catch (error) {
+    console.error("Error deleting note:", error);
+  }
 }
 
 function updateDialog(value) {
@@ -38,23 +131,7 @@ function editNote(note) {
   selectedNote.value = { ...note };
   updateEditDialog(true);
 }
-
-function saveNote(editedNote) {
-  const index = notes.value.findIndex((note) => note.id === editedNote.id);
-  if (index !== -1) {
-    notes.value.splice(index, 1, editedNote);
-  }
-}
-
-function deleteNote(note) {
-  const index = notes.value.findIndex((n) => n.id === note.id);
-  if (index !== -1) {
-    notes.value.splice(index, 1);
-    console.log(notes.value);
-  }
-}
 </script>
-
 
 <template>
   <v-card class="notes-card">
@@ -65,6 +142,7 @@ function deleteNote(note) {
         :newNote="newNote"
         @update:notes="updateNotes"
         @update:dialog="updateDialog"
+        :addNote="addNote"
       />
     </div>
 
@@ -95,8 +173,6 @@ function deleteNote(note) {
     />
   </v-card>
 </template>
-
-
 
 <style scoped>
 .notes-card {

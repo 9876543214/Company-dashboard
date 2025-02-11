@@ -2,22 +2,13 @@
 const props = defineProps({
   dialog: Boolean,
   newNote: Object,
+  addNote: Function,
 });
 
 const emit = defineEmits(["update:dialog", "update:notes"]);
 
 function updateDialog(value) {
   emit("update:dialog", value);
-}
-
-function addNote() {
-  if (props.newNote.title && props.newNote.content) {
-    notesStore.addNote({ ...props.newNote });
-    emit("update:notes", notesStore.notes);
-    props.newNote.title = "";
-    props.newNote.content = "";
-    updateDialog(false);
-  }
 }
 </script>
 
@@ -55,4 +46,3 @@ function addNote() {
     </v-card>
   </v-dialog>
 </template>
-
