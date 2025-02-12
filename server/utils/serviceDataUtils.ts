@@ -1,7 +1,7 @@
-import { promises as fs } from 'fs';
-import { join } from 'path';
+import mongoose from 'mongoose';
+import connectDB from './db';
 
-const dataFilePath = join(process.cwd(), 'server/data/serviceData.json');
+connectDB();
 
 interface Service {
     id: number;
@@ -10,12 +10,28 @@ interface Service {
     errorMessage?: string;
 }
 
+const serviceSchema = new mongoose.Schema<Service>({
+    id: { type: Number, required: true },
+    name: { type: String, required: true },
+    status: { type: String, required: true },
+    errorMessage: { type: String },
+});
+
+const ServiceModel = mongoose.model<Service>('Service', serviceSchema);
+
 export async function readServiceData(): Promise<Service[]> {
     try {
-        const data = await fs.readFile(dataFilePath, 'utf-8');
-        return JSON.parse(data) as Service[];
+        return await ServiceModel.find().exec();
     } catch (error) {
         console.error('Error reading service data:', error);
         return [];
+    }
+}
+
+export async function writeServiceData(data: Service[]): Promise<void> {
+    try {
+        await ServiceModel.insertMany(data);
+    } catch (error) {
+        console.error('Error writing service data:', error);
     }
 }

@@ -1,4 +1,6 @@
 <script setup>
+import { ref, watch } from "vue";
+
 const props = defineProps({
   dialog: Boolean,
   note: Object,
@@ -6,17 +8,26 @@ const props = defineProps({
 
 const emit = defineEmits(["update:dialog", "save-note", "delete-note"]);
 
+const localNote = ref({ ...props.note });
+
+watch(
+  () => props.note,
+  (newNote) => {
+    localNote.value = { ...newNote };
+  }
+);
+
 function closeDialog() {
   emit("update:dialog", false);
 }
 
 function saveNote() {
-  emit("save-note", props.note);
+  emit("save-note", localNote.value);
   closeDialog();
 }
 
 function deleteNote() {
-  emit("delete-note", props.note);
+  emit("delete-note", localNote.value);
   closeDialog();
 }
 </script>
@@ -31,9 +42,13 @@ function deleteNote() {
     <v-card>
       <v-card-title>Edit Note</v-card-title>
       <v-card-text>
-        <v-textarea v-model="note.title" label="Title" rows="1"></v-textarea>
         <v-textarea
-          v-model="note.content"
+          v-model="localNote.title"
+          label="Title"
+          rows="1"
+        ></v-textarea>
+        <v-textarea
+          v-model="localNote.content"
           label="Content"
           rows="4"
           auto-grow
@@ -47,4 +62,3 @@ function deleteNote() {
     </v-card>
   </v-dialog>
 </template>
-

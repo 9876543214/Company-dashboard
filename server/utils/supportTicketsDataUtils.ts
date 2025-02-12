@@ -1,10 +1,9 @@
-import { promises as fs } from 'fs';
-import { join } from 'path';
+import SupportTicketModel from '../models/SupportTicket';
+import connectDB from './db';
 
-const dataFilePath = join(process.cwd(), 'server/data/supportTicketsData.json');
+connectDB();
 
 interface SupportTicket {
-    id: number;
     customer: string;
     title: string;
     priority: string;
@@ -14,8 +13,7 @@ interface SupportTicket {
 
 export async function readSupportTicketsData(): Promise<SupportTicket[]> {
     try {
-        const data = await fs.readFile(dataFilePath, 'utf-8');
-        return JSON.parse(data) as SupportTicket[];
+        return await SupportTicketModel.find() as SupportTicket[];
     } catch (error) {
         console.error('Error reading support tickets data:', error);
         return [];
@@ -24,7 +22,7 @@ export async function readSupportTicketsData(): Promise<SupportTicket[]> {
 
 export async function writeSupportTicketsData(data: SupportTicket[]): Promise<void> {
     try {
-        await fs.writeFile(dataFilePath, JSON.stringify(data, null, 2), 'utf-8');
+        await SupportTicketModel.insertMany(data);
     } catch (error) {
         console.error('Error writing support tickets data:', error);
     }

@@ -67,7 +67,8 @@ async function addNote() {
 async function saveNote(editedNote) {
   console.log("saveNote function called");
   try {
-    const response = await fetch(`/api/notes/${editedNote.id}`, {
+    console.log("Edited note:", editedNote);
+    const response = await fetch(`/api/notes/${editedNote._id}`, {
       method: "PUT",
       body: JSON.stringify(editedNote),
       headers: {
@@ -96,7 +97,7 @@ async function saveNote(editedNote) {
 async function deleteNote(note) {
   console.log("deleteNote function called");
   try {
-    const response = await fetch(`/api/notes/${note.id}`, {
+    const response = await fetch(`/api/notes/${note._id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

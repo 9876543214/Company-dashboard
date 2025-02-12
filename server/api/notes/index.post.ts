@@ -3,16 +3,12 @@ import { readData, writeData } from "../../utils/notesDataUtils";
 
 export default defineEventHandler(async (event) => {
     try {
-        console.log("Received event:", event);
         const newNote = await readBody(event);
         console.log("Received new note:", newNote);
 
-        const notesData = await readData();
-        newNote.id = notesData.length + 1;
-        notesData.push(newNote);
-        await writeData(notesData);
+        await writeData(newNote);
 
-        console.log("Updated notesData:", notesData);
+        console.log("Created new note:", newNote);
         return newNote;
     } catch (error) {
         console.error("Error handling request:", error);

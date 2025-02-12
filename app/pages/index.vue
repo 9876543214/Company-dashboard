@@ -97,7 +97,7 @@ export default {
 #grid2:not(.hidden) {
   flex: 0.25;
   height: 93vh !important;
-  margin-top: 1.5vh;
+  margin-top: 1vh;
   margin-right: 0.5vw;
   margin-left: 0.5vw;
   width: 100%;

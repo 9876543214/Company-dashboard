@@ -1,7 +1,7 @@
-import { promises as fs } from 'fs';
-import { join } from 'path';
+import mongoose from 'mongoose';
+import connectDB from './db';
 
-const dataFilePath = join(process.cwd(), 'server/data/eventsData.json');
+connectDB();
 
 interface Event {
     id: number;
@@ -11,10 +11,19 @@ interface Event {
     importance: string;
 }
 
+const eventSchema = new mongoose.Schema<Event>({
+    id: { type: Number, required: true },
+    title: { type: String, required: true },
+    description: { type: String, required: true },
+    timestamp: { type: String, required: true },
+    importance: { type: String, required: true },
+});
+
+const EventModel = mongoose.model<Event>('Event', eventSchema);
+
 export async function readEventData(): Promise<Event[]> {
     try {
-        const data = await fs.readFile(dataFilePath, 'utf-8');
-        return JSON.parse(data) as Event[];
+        return await EventModel.find().exec();
     } catch (error) {
         console.error('Error reading event data:', error);
         return [];
@@ -23,7 +32,7 @@ export async function readEventData(): Promise<Event[]> {
 
 export async function writeEventData(data: Event[]): Promise<void> {
     try {
-        await fs.writeFile(dataFilePath, JSON.stringify(data, null, 2), 'utf-8');
+        await EventModel.insertMany(data);
     } catch (error) {
         console.error('Error writing event data:', error);
     }

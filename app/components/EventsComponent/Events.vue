@@ -43,21 +43,29 @@ const sortedEvents = computed(() => {
 
 const nextEvent = computed(() => {
   const now = new Date("2025-01-30T11:00:00Z");
-  return sortedEvents.value.find((event) => new Date(event.timestamp) > now);
+  const next = sortedEvents.value.find(
+    (event) => new Date(event.timestamp) > now
+  );
+  console.log("Next event:", next);
+  return next;
 });
 
 const filteredEvents = computed(() => {
   const now = new Date("2025-01-30T11:00:00Z");
+  let filtered;
+  console.log("Show past events:", showPastEvents.value);
   if (showPastEvents.value) {
-    return sortedEvents.value
+    filtered = sortedEvents.value
       .filter((event) => new Date(event.timestamp) <= now)
       .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
   } else {
-    return sortedEvents.value.filter(
-      (event) =>
-        new Date(event.timestamp) > now && event.id !== nextEvent.value?.id
+    console.log("Sorted events:", sortedEvents.value);
+    filtered = sortedEvents.value.filter(
+      (event) => new Date(event.timestamp) >= now && event !== nextEvent.value
     );
   }
+  console.log("Filtered events:", filtered);
+  return filtered;
 });
 
 function showEventDetails(eventItem) {
