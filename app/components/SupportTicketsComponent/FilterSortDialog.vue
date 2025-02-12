@@ -1,5 +1,35 @@
+<script>
+export default {
+  props: {
+    filterDialog: Boolean,
+    customerOptions: Array,
+    filterCustomer: Array,
+    priorityOptions: Array,
+    filterPriority: Array,
+    sortCriterion: String,
+    sortOptions: Array,
+    selectAllCustomers: Boolean,
+    selectSomeCustomers: Boolean,
+  },
+  methods: {
+    toggleSelectAllCustomers() {
+      console.log("toggleSelectAllCustomers called");
+      this.$emit("toggle-select-all-customers");
+    },
+    onFilterCustomerUpdate(value) {
+      console.log("filterCustomer updated:", value);
+      this.$emit("update:filterCustomer", value);
+    },
+  },
+};
+</script>
+
 <template>
-  <v-dialog :model-value="filterDialog" @update:model-value="$emit('update:filterDialog', $event)" max-width="600">
+  <v-dialog
+    :model-value="filterDialog"
+    @update:model-value="$emit('update:filterDialog', $event)"
+    max-width="600"
+  >
     <v-card>
       <v-card-title>Filter & Sort Tickets</v-card-title>
       <v-card-text>
@@ -55,34 +85,11 @@
         </v-form>
       </v-card-text>
       <v-card-actions>
-        <v-btn color="primary" text @click="$emit('update:filterDialog', false)">Finish</v-btn>
+        <v-btn color="primary" text @click="$emit('update:filterDialog', false)"
+          >Finish</v-btn
+        >
       </v-card-actions>
     </v-card>
   </v-dialog>
 </template>
 
-<script>
-export default {
-  props: {
-    filterDialog: Boolean,
-    customerOptions: Array,
-    filterCustomer: Array,
-    priorityOptions: Array,
-    filterPriority: Array,
-    sortCriterion: String,
-    sortOptions: Array,
-    selectAllCustomers: Boolean,
-    selectSomeCustomers: Boolean,
-  },
-  methods: {
-    toggleSelectAllCustomers() {
-      console.log('toggleSelectAllCustomers called');
-      this.$emit('toggle-select-all-customers');
-    },
-    onFilterCustomerUpdate(value) {
-      console.log('filterCustomer updated:', value);
-      this.$emit('update:filterCustomer', value);
-    },
-  },
-};
-</script>

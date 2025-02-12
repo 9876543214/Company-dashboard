@@ -1,12 +1,154 @@
+<script setup>
+import { ref } from "vue";
+import { useFetch } from "#app";
+import NoteItem from "./NoteItem.vue";
+import NoteDialog from "./NoteDialog.vue";
+import EditNoteDialog from "./EditNoteDialog.vue";
+
+const notes = ref([]);
+const newNote = ref({
+  title: "",
+  content: "",
+});
+const dialog = ref(false);
+const editDialog = ref(false);
+const selectedNote = ref(null);
+
+async function getnotes() {
+  try {
+    const { data } = await useFetch("/api/notes");
+    notes.value = data.value;
+    console.log("Fetched notes:", notes.value);
+  } catch (error) {
+    console.error("Error fetching notes:", error);
+  }
+}
+
+getnotes();
+
+function updateNotes(updatedNotes) {
+  notes.value = updatedNotes;
+}
+
+async function addNote() {
+  console.log("addNote function called");
+  if (newNote.value.title && newNote.value.content) {
+    try {
+      const response = await fetch("/api/notes", {
+        method: "POST",
+        body: JSON.stringify(newNote.value),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      console.log("Response status:", response.status);
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error("Failed to add note:", errorData);
+        return;
+      }
+
+      const addedNote = await response.json();
+      console.log("Added note:", addedNote);
+
+      getnotes();
+
+      newNote.value.title = "";
+      newNote.value.content = "";
+      updateDialog(false);
+    } catch (error) {
+      console.error("Error adding note:", error);
+    }
+  }
+}
+
+async function saveNote(editedNote) {
+  console.log("saveNote function called");
+  try {
+    console.log("Edited note:", editedNote);
+    const response = await fetch(`/api/notes/${editedNote._id}`, {
+      method: "PUT",
+      body: JSON.stringify(editedNote),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    console.log("Response status:", response.status);
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error("Failed to save note:", errorData);
+      return;
+    }
+
+    const updatedNote = await response.json();
+    console.log("Updated note:", updatedNote);
+
+    getnotes();
+    updateEditDialog(false);
+  } catch (error) {
+    console.error("Error saving note:", error);
+  }
+}
+
+async function deleteNote(note) {
+  console.log("deleteNote function called");
+  try {
+    const response = await fetch(`/api/notes/${note._id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    console.log("Response status:", response.status);
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error("Failed to delete note:", errorData);
+      return;
+    }
+
+    console.log("Deleted note:", note);
+
+    getnotes();
+  } catch (error) {
+    console.error("Error deleting note:", error);
+  }
+}
+
+function updateDialog(value) {
+  dialog.value = value;
+}
+
+function updateEditDialog(value) {
+  editDialog.value = value;
+}
+
+function editNote(note) {
+  selectedNote.value = { ...note };
+  updateEditDialog(true);
+}
+</script>
+
 <template>
   <v-card class="notes-card">
     <div class="card-header">
       <h1>Notes</h1>
-      <NoteDialog :dialog="dialog" :newNote="newNote" @update:notes="updateNotes" @update:dialog="updateDialog" />
+      <NoteDialog
+        :dialog="dialog"
+        :newNote="newNote"
+        @update:notes="updateNotes"
+        @update:dialog="updateDialog"
+        :addNote="addNote"
+      />
     </div>
 
     <v-list lines="one" class="notes-list">
-      <template v-if="notes.length">
+      <template v-if="notes?.length">
         <v-list-item
           v-for="note in notes"
           :key="note.id"
@@ -23,65 +165,15 @@
       </template>
     </v-list>
 
-    <EditNoteDialog :dialog="editDialog" :note="selectedNote" @update:dialog="updateEditDialog" @save-note="saveNote" @delete-note="deleteNote" />
+    <EditNoteDialog
+      :dialog="editDialog"
+      :note="selectedNote"
+      @update:dialog="updateEditDialog"
+      @save-note="saveNote"
+      @delete-note="deleteNote"
+    />
   </v-card>
 </template>
-
-<script>
-import { notesData } from '../../data/testdata.js';
-import NoteItem from './NoteItem.vue';
-import NoteDialog from './NoteDialog.vue';
-import EditNoteDialog from './EditNoteDialog.vue';
-
-export default {
-  name: 'Notes',
-  components: {
-    NoteItem,
-    NoteDialog,
-    EditNoteDialog,
-  },
-  data() {
-    return {
-      notes: notesData,
-      newNote: {
-        title: '',
-        content: '',
-      },
-      dialog: false,
-      editDialog: false,
-      selectedNote: null,
-    };
-  },
-  methods: {
-    updateNotes(updatedNotes) {
-      this.notes = updatedNotes;
-    },
-    updateDialog(value) {
-      this.dialog = value;
-    },
-    updateEditDialog(value) {
-      this.editDialog = value;
-    },
-    editNote(note) {
-      this.selectedNote = { ...note };
-      this.updateEditDialog(true);
-    },
-    saveNote(editedNote) {
-      const index = this.notes.findIndex(note => note.id === editedNote.id);
-      if (index !== -1) {
-        this.notes.splice(index, 1, editedNote);
-      }
-    },
-    deleteNote(note) {
-      const index = this.notes.findIndex(n => n.id === note.id);
-      if (index !== -1) {
-        this.notes.splice(index, 1);
-        console.log(this.notes)
-      }
-    },
-  },
-};
-</script>
 
 <style scoped>
 .notes-card {
