@@ -49,20 +49,18 @@ export async function updateNoteById(updatedNoteData: any): Promise<any | null> 
   try {
     console.log(`Updating note with id: ${updatedNoteData._id}`, updatedNoteData);
 
-    const notes = await readData();
-    const noteIndex = notes.findIndex(note => note._id === updatedNoteData._id);
+    const updatedNote = await Note.findByIdAndUpdate(
+      updatedNoteData._id,
+      updatedNoteData,
+      { new: true, runValidators: true }
+    ).exec();
 
-    if (noteIndex === -1) {
+    if (!updatedNote) {
       throw new Error(`Note with id ${updatedNoteData._id} not found`);
     }
 
-    notes[noteIndex] = { ...notes[noteIndex], ...updatedNoteData };
-
-    await Note.deleteMany({});
-    await writeData(notes);
-
-    console.log('Updated notes data:', notes);
-    return notes[noteIndex];
+    console.log('Note updated successfully:', updatedNote);
+    return updatedNote;
   } catch (error) {
     console.error('Error updating note:', error);
     return null;
