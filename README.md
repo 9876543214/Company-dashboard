@@ -5,6 +5,7 @@ This project is a dashboard application built with Nuxt.js, Vue.js, and Vueify. 
 
 ## Prerequisites
 - npm, pnpm, yarn, or bun
+- Mongodb ver 8.0 or above installed locally
 
 ## Development Setup
 
@@ -32,6 +33,25 @@ This project is a dashboard application built with Nuxt.js, Vue.js, and Vueify. 
      bun install
 ```
 
+3. **Start the database**:
+
+- Create a new folder called "db" in server/data 
+
+```bash
+     # Example file paths
+
+     "C:\Program Files\MongoDB\Server\8.0\bin\mongod.exe" --dbpath "C:\Path\To\Cloned\Repo\server\data\db"
+```
+
+- Change the first url to the file path to your mongod.exe file
+- Change the second url to the file path to your db folder in the cloned repo
+
+```bash
+     # run script to insert mockdata
+
+     node server/utils/insertData.ts
+```
+
 3. **Start the development server**:
 ```bash
      # npm
@@ -51,7 +71,7 @@ This project is a dashboard application built with Nuxt.js, Vue.js, and Vueify. 
      bun run dev
 ```
 ## Recommended Extensions
-Here are some recommended extensions for a better development experience:
+Here are some recommended extensions:
 - **Vetur**: Vue tooling for VS Code
 - **ESLint**: Integrates ESLint into VS Code
 - **Prettier - Code formatter**: Code formatter for consistent code style
@@ -59,13 +79,17 @@ Here are some recommended extensions for a better development experience:
 
 ## Project Structure
 ```
-your-repository/
+Company-dashboard/
 ├── app/
 │   ├── components/
-│   ├── data/
 │   ├── pages/
 │   │   └── index.vue
 │   └── layouts/
+├── server/
+│   ├── api/
+│   ├── data/
+│   ├── models/
+│   └── utils/
 ├── nuxt.config.ts
 ├── package.json
 ├── tsconfig.json
@@ -73,9 +97,12 @@ your-repository/
 └── README.md
 ```
 - **app/components/**: Contains Vue components.
-- **app/data/**: Contains test data files.
-- **app/pages/**: Contains page the main page `index.vue`.
+- **app/pages/**: Contains the main page `index.vue`.
 - **app/layouts/**: Contains layout components.
+- **server/api/**: Contains Nitro API to use the database.
+- **server/data/**: Contains mock data files and database.
+- **server/models/**: Contains Mongoose models that define the schema for the MongoDB collections.
+- **server/utils/**: Contains utility files, such as database connection setup and scripts for inserting sample data.
 - **nuxt.config.ts**: Nuxt.js configuration file.
 - **package.json**: Project dependencies and scripts.
 - **tsconfig.json**: TypeScript configuration file.
