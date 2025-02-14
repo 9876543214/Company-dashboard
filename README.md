@@ -37,14 +37,15 @@ This project is a dashboard application built with Nuxt.js, Vue.js, and Vueify. 
 
 - Create a new folder called "db" in server/data 
 
+- Change the first url to the file path to your mongod.exe file
+- Change the second url to the file path to your db folder in the cloned repo
 ```bash
      # Example file paths
 
      "C:\Program Files\MongoDB\Server\8.0\bin\mongod.exe" --dbpath "C:\Path\To\Cloned\Repo\server\data\db"
 ```
 
-- Change the first url to the file path to your mongod.exe file
-- Change the second url to the file path to your db folder in the cloned repo
+- Run insertData.ts
 
 ```bash
      # run script to insert mockdata
