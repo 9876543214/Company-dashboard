@@ -1,5 +1,5 @@
 import { defineEventHandler, readBody } from "h3";
-import { readData, writeData } from "../../utils/notesDataUtils";
+import { writeData } from "../../utils/notesDataUtils";
 
 export default defineEventHandler(async (event) => {
     try {

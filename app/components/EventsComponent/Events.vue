@@ -1,11 +1,12 @@
 <script setup>
 import { ref, computed, watch, onMounted } from "vue";
-import { useFetch } from "#app";
 import EventsList from "@/components/EventsComponent/EventList.vue";
 import EventDetailsDialog from "@/components/EventsComponent/EventDetailsDialog.vue";
+import AddEventDialog from "@/components/EventsComponent/AddEventDialog.vue";
 
 const events = ref([]);
 const dialog = ref(false);
+const addEventDialog = ref(false);
 const selectedEvent = ref({});
 const showPastEvents = ref(false);
 const headerText = ref("");
@@ -96,12 +97,20 @@ watch(showPastEvents, () => {
 
 <template>
   <v-card class="events-card">
+    <div class="card-header">
+      <h1>{{ headerText }}</h1>
+      <v-btn :disabled="isButtonDisabled" @click="togglePastEvents">
+        {{ showPastEvents ? "Show Upcoming Events" : "Show Past Events" }}
+      </v-btn>
+      <v-btn color="primary" @click="addEventDialog = true">Add Event</v-btn>
+    </div>
     <EventsList
       :events="events"
       :show-past-events="showPastEvents"
       :next-event="nextEvent"
       :filtered-events="filteredEvents"
       :header-text="headerText"
+      class="events-list"
       @toggle-past-events="togglePastEvents"
       @show-event-details="showEventDetails"
     />
@@ -110,6 +119,11 @@ watch(showPastEvents, () => {
       :event="selectedEvent"
       @update:dialog="dialog = $event"
     />
+    <AddEventDialog
+      v-model="addEventDialog"
+      :newEvent="{ title: '', description: '', timestamp: null }"
+      @event-added="fetchEvents"
+    />
   </v-card>
 </template>
 
@@ -117,5 +131,19 @@ watch(showPastEvents, () => {
 .events-card {
   height: 100%;
   color: white;
+}
+
+.events-list {
+  height: calc(100% - 6.6vh);
+  position: relative;
+  overflow-y: auto;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  height: 6.6vh;
 }
 </style>
