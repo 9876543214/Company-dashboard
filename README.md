@@ -43,7 +43,7 @@ This project is a dashboard application built with Nuxt.js, Vue.js, and Vueify. 
 
      "C:\Program Files\MongoDB\Server\8.0\bin\mongod.exe" --dbpath "C:\Path\To\Cloned\Repo\server\data\db"
 
-     # Change the first url to the file path to your mongod.exe file
+     # Change the first url to the file path to your locally installed mongod.exe file
      # Change the second url to the file path to your db folder in the cloned repo
 ```
 
