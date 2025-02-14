@@ -1,6 +1,7 @@
 <script setup>
 import { ref, watch, nextTick, onMounted } from "vue";
 import EventListItem from "./EventListItem.vue";
+import AddEventDialog from "./AddEventDialog.vue";
 
 const props = defineProps({
   events: Array,
@@ -10,12 +11,22 @@ const props = defineProps({
   headerText: String,
 });
 
-const emit = defineEmits(["toggle-past-events", "show-event-details"]);
+const emit = defineEmits([
+  "toggle-past-events",
+  "show-event-details",
+  "add-event",
+]);
 
 const delayedFilteredEvents = ref([]);
 const delayedNextEvent = ref(null);
 const isButtonDisabled = ref(false);
 const isFirstLoad = ref(true);
+const addEventDialog = ref(false);
+const newEvent = ref({
+  title: "",
+  description: "",
+  timestamp: "",
+});
 
 function handleTogglePastEvents() {
   isButtonDisabled.value = true;
@@ -28,6 +39,11 @@ function handleTogglePastEvents() {
 function handleShowEventDetails(eventItem) {
   console.log("EventList: handleShowEventDetails", eventItem);
   emit("show-event-details", eventItem);
+}
+
+function handleAddEvent() {
+  emit("add-event", newEvent.value);
+  addEventDialog.value = false;
 }
 
 watch(
@@ -58,12 +74,6 @@ onMounted(() => {
 
 <template>
   <div>
-    <div class="card-header">
-      <h1>{{ headerText }}</h1>
-      <v-btn :disabled="isButtonDisabled" @click="handleTogglePastEvents">
-        {{ showPastEvents ? "Show Upcoming Events" : "Show Past Events" }}
-      </v-btn>
-    </div>
     <v-list lines="one" class="events-list">
       <transition-group name="event-transition" tag="div">
         <div
@@ -93,23 +103,15 @@ onMounted(() => {
         </div>
       </transition-group>
     </v-list>
+    <AddEventDialog
+      v-model="addEventDialog"
+      :newEvent="newEvent"
+      @add-event="handleAddEvent"
+    />
   </div>
 </template>
 
 <style scoped>
-.events-list {
-  height: 44.1vh;
-  overflow-y: auto;
-}
-
-.card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-shrink: 0;
-  height: 6.6vh;
-}
-
 .next-event {
   margin-bottom: 16px;
 }

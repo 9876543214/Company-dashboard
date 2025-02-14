@@ -1,4 +1,4 @@
-  <script setup>
+<script setup>
 import { defineProps, defineEmits } from "vue";
 
 const props = defineProps({
@@ -18,6 +18,7 @@ function showEventDetails() {
   console.log("EventListItem: showEventDetails", props.event);
   emit("show-event-details", props.event);
 }
+const eventDate = new Date(props.event.timestamp);
 </script>
 
 <template>
@@ -30,7 +31,7 @@ function showEventDetails() {
     <v-list-item-content>
       <v-list-item-title>{{ event.title }}</v-list-item-title>
       <v-list-item-subtitle>{{
-        new Date(event.timestamp).toLocaleString()
+        eventDate.toLocaleString()
       }}</v-list-item-subtitle>
       <div v-if="showDetails">
         <p>{{ event.description }}</p>
@@ -38,10 +39,8 @@ function showEventDetails() {
     </v-list-item-content>
   </v-list-item>
 </template>
-  
 
-  
-  <style scoped>
+<style scoped>
 .event-item {
   width: 99%;
   border-radius: 10px;
